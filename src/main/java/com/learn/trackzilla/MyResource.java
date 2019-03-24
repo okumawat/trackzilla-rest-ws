@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import com.learn.trackzilla.model.Application;
 import com.learn.trackzilla.utils.DBUtil;
 
 /**
@@ -28,8 +29,8 @@ public class MyResource {
      */
     @GET
     @Path("/application/{id}")
-    @Produces(MediaType.APPLICATION_XML)
-    public Application getApplication(@PathParam("id") int id) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getApplication(@PathParam("id") int id) {
     	Application application = new Application();
     	Connection conn=DBUtil.getDBConnection();
     	try {
@@ -55,8 +56,7 @@ public class MyResource {
 				e.printStackTrace();
 			}
     	}
-    	Response.status(200).build();
+    	return Response.status(200).entity(application).build();
     	//return application.getId()+","+application.getName()+","+application.getDescription();
-    	return application;
     }
 }

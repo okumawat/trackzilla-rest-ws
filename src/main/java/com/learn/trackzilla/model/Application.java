@@ -1,4 +1,4 @@
-package com.learn.trackzilla;
+package com.learn.trackzilla.model;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -10,6 +10,12 @@ public class Application {
 	private String name;
 	private String description;
 	
+	public Application(int id, String name, String description) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+	}
+
 	public Application() {
 		
 	}
