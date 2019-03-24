@@ -18,7 +18,7 @@ import com.learn.trackzilla.utils.DBUtil;
 /**
  * Root resource (exposed at "myresource" path)
  */
-@Path("/v1")
+@Path("v1")
 public class MyResource {
 
     /**
