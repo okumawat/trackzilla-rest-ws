@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Ticket{
 	
 	private int id;
+	private String title;
 	private String description;
 	private int applicationId;
 	private String status;
@@ -47,9 +48,18 @@ public class Ticket{
 		this.status = status;
 	}
 
-	public Ticket(int id, String description, int applicationId, String status) {
+	public String getTitle() {
+		return title;
+	}
+	@XmlElement
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Ticket(int id, String title, String description, int applicationId, String status) {
 		super();
 		this.id = id;
+		this.title = title;
 		this.description = description;
 		this.applicationId = applicationId;
 		this.status = status;

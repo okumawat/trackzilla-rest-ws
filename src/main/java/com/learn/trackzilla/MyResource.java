@@ -1,6 +1,7 @@
 package com.learn.trackzilla;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -10,9 +11,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import com.learn.trackzilla.model.Application;
+import com.learn.trackzilla.model.Ticket;
 import com.learn.trackzilla.utils.DBUtil;
 
 /**
@@ -23,32 +24,37 @@ public class MyResource {
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "text/plain" media type.
+     * to the client as "application/json" media type.
      *
-     * @return String that will be returned as a text/plain response.
+     * @return ticket that will be returned as a application/json response.
      */
-    @GET
-    @Path("/application/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getApplication(@PathParam("id") int id) {
-    	Application application = new Application();
-    	Connection conn=DBUtil.getDBConnection();
+	@GET
+	@Path("/ticket/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getTicket(@PathParam("id") int id) {
+		
+		Ticket ticket = null;
+		ResultSet rs = null;
+		Connection conn=null;
+		PreparedStatement preparedStatement=null;
     	try {
-    		String sql = "select * from tza_application where id="+id;
-    		ResultSet rs =conn.createStatement().executeQuery(sql);
+    		conn=DBUtil.getDBConnection();
+    		String sql = "select * from tza_ticket where id=?";
+    		preparedStatement = conn.prepareStatement(sql);
+    		preparedStatement.setInt(1, id);
+    		rs =preparedStatement.executeQuery();
     		while(rs.next()) {
-    			application.setId(rs.getInt(1));
-    			application.setName(rs.getString(2));
-    			application.setDescription(rs.getString(3));
+    			ticket=new Ticket(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5));
     		}
-    		System.out.println(application.getName());
-    		
+    		return Response.status(200).entity(ticket).build(); 
     	}catch(Exception e) {
     		e.printStackTrace();
     		System.out.println("errored out .."+e.getMessage());
-    		return null;
+    		return Response.status(500).build();
     	}finally {
     		try {
+    			rs.close();
+    			preparedStatement.close();
 				conn.close();
 				System.out.println("db connection closed.");
 			} catch (SQLException e) {
@@ -56,7 +62,49 @@ public class MyResource {
 				e.printStackTrace();
 			}
     	}
-    	return Response.status(200).entity(application).build();
-    	//return application.getId()+","+application.getName()+","+application.getDescription();
+		
+	}
+	
+	/**
+     * Method handling HTTP GET requests. The returned object will be sent
+     * to the client as "application/json" media type.
+     *
+     * @return application that will be returned as a application/json response.
+     */
+    @GET
+    @Path("/application/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getApplication(@PathParam("id") int id) {
+    	Application application = new Application();
+    	Connection conn=null;
+    	ResultSet rs = null;
+    	PreparedStatement preparedStatement=null;
+    	try {
+    		conn=DBUtil.getDBConnection();
+    		String sql = "select * from tza_application where id=?";
+    		preparedStatement = conn.prepareStatement(sql);
+    		preparedStatement.setInt(1, id);
+    		rs =preparedStatement.executeQuery();
+    		while(rs.next()) {
+    			application.setId(rs.getInt(1));
+    			application.setName(rs.getString(2));
+    			application.setDescription(rs.getString(3));
+    		}
+    		return Response.status(200).entity(application).build();
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		System.out.println("errored out .."+e.getMessage());
+    		return Response.status(500).build();
+    	}finally {
+    		try {
+    			rs.close();
+    			preparedStatement.close();
+				conn.close();
+				System.out.println("db connection closed.");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
     }
 }
