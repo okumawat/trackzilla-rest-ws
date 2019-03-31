@@ -14,6 +14,7 @@ public class DBUtil {
 	private static DataSource ds;
 	static {
 		try {
+			Class.forName("org.postgresql.Driver");
 			Context initContext = new InitialContext();
 			Context envContext  = (Context)initContext.lookup("java:/comp/env");
 			ds = (DataSource)envContext.lookup("jdbc/javaws");

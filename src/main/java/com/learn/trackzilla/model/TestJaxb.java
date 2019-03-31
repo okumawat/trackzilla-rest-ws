@@ -17,6 +17,13 @@ public class TestJaxb {
 		jc.createMarshaller().marshal(app, writer);
 		Application a1 = (Application) jc.createUnmarshaller().unmarshal(new StringReader(writer.toString()));
 		System.out.println(a1.getName());
+		try {
+			  Class.forName("org.postgresql.Driver");
+			  //on classpath
+			  System.out.println("in the path");
+			} catch(ClassNotFoundException e) {
+			  e.printStackTrace();
+			}
 	}
 
 }

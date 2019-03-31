@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resource name="jdbc/javaws" auth="Container" type="javax.sql.DataSource"
+               maxActive="50" maxIdle="30" maxWait="10000"
+               username="postgres" password="postgres" 
+               driverClassName="org.postgres.Driver"
+               url="jdbc:postgresql://localhost:5432/javaws"/>
+</Context>
