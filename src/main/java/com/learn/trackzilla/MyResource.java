@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -30,8 +31,8 @@ public class MyResource {
      */
 	@GET
 	@Path("/ticket/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getTicket(@PathParam("id") int id) {
+	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Response getTicket(@PathParam("id") int id,@QueryParam("format") String format) {
 		
 		Ticket ticket = null;
 		ResultSet rs = null;
@@ -46,7 +47,7 @@ public class MyResource {
     		while(rs.next()) {
     			ticket=new Ticket(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5));
     		}
-    		return Response.status(200).entity(ticket).build(); 
+    		return Response.ok("application/"+format).status(200).entity(ticket).build();
     	}catch(Exception e) {
     		e.printStackTrace();
     		System.out.println("errored out .."+e.getMessage());

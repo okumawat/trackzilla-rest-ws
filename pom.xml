@@ -22,24 +22,6 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-            <plugin>
-			    <groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-<!-- 					<tomeeVersion>8.0.0-M2</tomeeVersion> -->
-<!-- 	        		<tomeeClassifier>plus</tomeeClassifier> -->
-<!-- 				    <tomeeHost>localhost</tomeeHost> -->
-<!-- 				    <tomeeAjpPort>8009</tomeeAjpPort> -->
-<!-- 			        <tomeeHttpPort>8080</tomeeHttpPort> -->
-<!-- 			        <tomeeShutdownPort>8005</tomeeShutdownPort> -->
-<!-- 				    <server>TomcatServer</server> -->
-					<url>http://localhost:8080/manager/html</url>
-				    <path>/${project.artifactId}</path>
-				    <server>TomcatServer</server>
-				    <update>true</update>
-				</configuration>
-		    </plugin>
         </plugins>
     </build>
 
@@ -79,12 +61,6 @@
 		    <version>8.0</version>
 		    <scope>provided</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
-		<dependency>
-		    <groupId>javax.xml.bind</groupId>
-		    <artifactId>jaxb-api</artifactId>
-		    <version>2.1</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 		<dependency>
 		    <groupId>org.postgresql</groupId>
@@ -97,28 +73,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.15</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl -->
-		<dependency>
-		    <groupId>com.sun.xml.bind</groupId>
-		    <artifactId>jaxb-impl</artifactId>
-		    <version>2.3.0.1</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-core -->
-		<dependency>
-		    <groupId>com.sun.xml.bind</groupId>
-		    <artifactId>jaxb-core</artifactId>
-		    <version>2.3.0.1</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.activation/activation -->
-		<dependency>
-		    <groupId>javax.activation</groupId>
-		    <artifactId>activation</artifactId>
-		    <version>1.1.1</version>
-		</dependency>
-
-		
-		
     </dependencies>
     <properties>
         <jersey.version>2.28</jersey.version>
