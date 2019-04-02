@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -23,6 +25,40 @@ import com.learn.trackzilla.utils.DBUtil;
 @Path("v1")
 public class MyResource {
 
+	@Path("/ticket/create")
+	@Consumes(MediaType.APPLICATION_XML)
+	@POST
+	public Response createTicket(Ticket ticket) {
+		Connection conn=null;
+		PreparedStatement preparedStatement=null;
+		try {
+			conn = DBUtil.getDBConnection();
+			preparedStatement = conn.prepareStatement("insert into tza_ticket(title,description,status,application_id,id) values(?,?,?,?,?)");
+			preparedStatement.setString(1, ticket.getTitle());
+			preparedStatement.setString(2, ticket.getDescription());
+			preparedStatement.setString(3, ticket.getStatus());
+			preparedStatement.setInt(4, ticket.getApplicationId());
+			preparedStatement.setInt(5, ticket.getId());
+			preparedStatement.execute();
+			
+			return Response.status(201).build();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Response.status(500).build();
+		}finally{
+			try {
+    			preparedStatement.close();
+				conn.close();
+				System.out.println("db connection closed.");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
     /**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the client as "application/json" media type.
