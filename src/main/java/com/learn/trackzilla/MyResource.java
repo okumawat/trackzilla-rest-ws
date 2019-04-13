@@ -30,7 +30,7 @@ public class MyResource {
      */
 	@GET
 	@Path("/ticket/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 	public Response getTicket(@PathParam("id") int id) {
 		
 		Ticket ticket = null;
@@ -73,7 +73,7 @@ public class MyResource {
      */
     @GET
     @Path("/application/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     public Response getApplication(@PathParam("id") int id) {
     	Application application = new Application();
     	Connection conn=null;
