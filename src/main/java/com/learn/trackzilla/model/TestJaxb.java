@@ -11,7 +11,7 @@ public class TestJaxb {
 
 	public static void main(String[] args) throws JAXBException {
 		// TODO Auto-generated method stub
-		Application app = new Application(0, "qwerty", "testing marshalling");
+		Application app = new Application(0, "qwerty", "testing marshalling",null);
 		JAXBContext jc = JAXBContext.newInstance(Application.class);
 		StringWriter writer = new StringWriter();
 		jc.createMarshaller().marshal(app, writer);

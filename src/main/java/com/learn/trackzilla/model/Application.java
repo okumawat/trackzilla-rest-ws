@@ -1,5 +1,7 @@
 package com.learn.trackzilla.model;
 
+import java.util.Set;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -9,11 +11,21 @@ public class Application {
 	private int id;
 	private String name;
 	private String description;
+	private Set<Ticket> tickets;
 	
-	public Application(int id, String name, String description) {
+	public Set<Ticket> getTickets() {
+		return tickets;
+	}
+	@XmlElement
+	public void setTickets(Set<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
+	public Application(int id, String name, String description,Set<Ticket> tickets) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.tickets = tickets;
 	}
 
 	public Application() {

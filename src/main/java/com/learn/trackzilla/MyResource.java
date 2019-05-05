@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -90,6 +92,19 @@ public class MyResource {
     			application.setName(rs.getString(2));
     			application.setDescription(rs.getString(3));
     		}
+    		preparedStatement.close();
+    		rs.close();
+    		sql = "select * from tza_ticket where applicationid=?";
+    		preparedStatement = conn.prepareStatement(sql);
+    		preparedStatement.setInt(1, id);
+    		rs =preparedStatement.executeQuery();
+    		Set<Ticket> tickets = new HashSet<>();
+    		while(rs.next()) {
+    			Ticket ticket = new Ticket(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5));
+    			tickets.add(ticket);
+    		}
+    		application.setTickets(tickets);
+    		
     		return Response.status(200).entity(application).build();
     	}catch(Exception e) {
     		e.printStackTrace();
